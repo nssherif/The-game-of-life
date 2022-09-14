@@ -16,40 +16,162 @@ Where - n is the number of iterations that the program runs for
 import java.awt.Color;
 
 public class Life {
-
-    private Color white = new Color (255, 255, 255);
-    private Color black = new Color (255, 255, 255);
-    private int cells[][]; // Cells of the grid
+    private int[][] currentGenCells;         // cell[i][j] = 1 if alive, 0 o/w
+    private boolean[][] nextGenCells;         // cell[i][j] = 1 if alive, 0 o/w
     private Picture pic; // Grid to be drawn
     private int magnification = 10;
+    private Color colors[] = {Color.WHITE, Color.BLACK};
+    private int pentaInitialConfig[][] = {
+        {0,0,1,0,0,0,0,1,0,0},
+        {1,1,0,1,1,1,1,0,1,1},
+        {0,0,1,0,0,0,0,1,0,0},
+    };
+    private int simkinInitialConfig[][] = { 
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    }};
 
     public Life (int x, int y) {
-        cells = new int[x][y];
+        currentGenCells = new int[x][y];
         pic = new Picture(x * magnification, y * magnification);
     }
 
-    public void show()
+    public void showBoard()
     {
         pic.show();
     }
 
-    // fill a cell with a random colour
-    private void drawCell(int i, int j)
-    {
-        float r = (float) Math.random();
-        float g = (float) Math.random();
-        float b = (float) Math.random();
-        Color col = new Color(r,g,b);
-        
+    // draws a cell
+    private void drawCell(int i, int j, Color color)
+    {        
         for (int offsetX = 0; offsetX < magnification; offsetX++)
         {
             for (int offsetY = 0; offsetY < magnification; offsetY++)
             {
-                // set() colours an individual pixel
                 pic.set((i*magnification)+offsetX,
-                        (j*magnification)+offsetY, col);
+                        (j*magnification)+offsetY, color);
             }
         }
+    }
+
+    // // adds initial config current gen cells array
+    // private void addInitialConfig (int i, int j) {
+    //     currentGenCells[i][j] = pentaInitialConfig[k][l];        
+    // }
+
+    // draw each cell in initial board
+    private void initializeCells(int gridSize, String pattern)
+    {     
+        int iIterator = 0;
+        int jIterator = 0;
+        // Penta-decathlon Oscillator pattern
+        if (pattern.equals("P")) {            
+            for (int i = 0; i < gridSize; i++)
+            {
+                for (int j = 0; j < gridSize; j++)
+                {
+                    if (i >= (gridSize/2)-1 && i<=(gridSize/2)+1) 
+                    {
+                        if (j >= (gridSize/2) - (pentaInitialConfig[0].length/2) && j<(gridSize/2) + pentaInitialConfig[0].length/2) {
+                            currentGenCells[j][i] = pentaInitialConfig[iIterator][jIterator];
+                            System.out.println(i);
+                            jIterator++;
+                        }  
+                        // else 
+                        // {
+                        //     currentGenCells[i][j] = 0; // white
+                            
+                        // }
+                    }
+                    // else 
+                    // {
+                    //     currentGenCells[i][j] = 0; // white
+                    // }
+                }
+                jIterator = 0;
+                if (i >= (gridSize/2)-1 && i<=(gridSize/2)+1) {
+                    iIterator++;
+                }
+
+            }
+        }
+
+        // Random pattern
+        if (pattern.equals("R")) {
+            for (int i = 0; i < gridSize; i++)
+            {
+                for (int j = 0; j < gridSize; j++)
+                {
+                    currentGenCells[i][j] = (int)Math.round( Math.random()); // 0 or 1
+                }
+            }
+        }
+
+        // Simkin glider gun pattern
+        if (pattern.equals("S")) {
+            for (int i = 0; i < gridSize; i++)
+            {
+                for (int j = 0; j < gridSize; j++)
+                {
+                    if (i >= (gridSize/2)-8 && i<=(gridSize/2)+8) 
+                    {
+                        if (j >= (gridSize/2) - (simkinInitialConfig[0].length/2) && j<(gridSize/2) + simkinInitialConfig[0].length/2) {
+                            currentGenCells[j][i] = simkinInitialConfig[jIterator][jIterator];
+                            System.out.println(i);
+                            jIterator++;
+                        }  
+                        // else 
+                        // {
+                        //     currentGenCells[i][j] = 0; // white
+                            
+                        // }
+                    }
+                    // else 
+                    // {
+                    //     currentGenCells[i][j] = 0; // white
+                    // }
+                }
+                jIterator = 0;
+                if (i >= (gridSize/2)-8 && i<=(gridSize/2)+8) {
+                    iIterator++;
+                }
+
+            }
+        }
+        showBoard();
+    }
+
+    // draw each cell in initial board
+    private void drawInitialBoard()
+    {     
+        for (int i = 0; i < currentGenCells.length; i++)
+        {
+            for (int j = 0; j < currentGenCells.length; j++)
+            {
+                // 0 == white
+                if (currentGenCells[i][j] == 0) {
+                    drawCell(i, j, Color.WHITE);
+                }
+                // 1 == black
+                else {
+                    drawCell(i, j, Color.BLACK);
+                }
+            }
+        }
+        
+        showBoard();
     }
 
     /* 
@@ -57,7 +179,7 @@ public class Life {
     Brings cell to life by filling it with a black color
     */
     private void reviveCell(int x, int y) {
-        pic.set(x*magnification, y*magnification, black);
+        pic.set(x*magnification, y*magnification, Color.WHITE);
     } 
 
     /* 
@@ -65,7 +187,7 @@ public class Life {
     Brings cell to life by filling it with a black color
     */
     private void killCell(int x, int y) {
-        pic.set(x, y, white);
+        pic.set(x, y, Color.WHITE);
     }
 
     public static void main (String args[]) {
@@ -75,16 +197,11 @@ public class Life {
 
         Life life = new Life(gridSize, gridSize);
 
+        life.initializeCells(gridSize, pattern);
+
+        life.drawInitialBoard();
+
         //life.killCell(1,1);
-        // fill each cell with a random colour
-        for (int i = 0; i < gridSize; i++)
-        {
-            for (int j = 0; j < gridSize; j++)
-            {
-                life.drawCell(i,j);
-            }
-        }
-        life.show();
 
         // switch (pattern) {
         //     case (R):  // Random
@@ -97,7 +214,5 @@ public class Life {
 
         //         break;
         // }
-
-        System.out.println(pattern);
     }
 }
