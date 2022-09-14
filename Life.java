@@ -35,13 +35,14 @@ public class Life {
         {0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-    }};
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+    };
 
     public Life (int x, int y) {
         currentGenCells = new int[x][y];
@@ -89,16 +90,7 @@ public class Life {
                             System.out.println(i);
                             jIterator++;
                         }  
-                        // else 
-                        // {
-                        //     currentGenCells[i][j] = 0; // white
-                            
-                        // }
                     }
-                    // else 
-                    // {
-                    //     currentGenCells[i][j] = 0; // white
-                    // }
                 }
                 jIterator = 0;
                 if (i >= (gridSize/2)-1 && i<=(gridSize/2)+1) {
@@ -125,26 +117,17 @@ public class Life {
             {
                 for (int j = 0; j < gridSize; j++)
                 {
-                    if (i >= (gridSize/2)-8 && i<=(gridSize/2)+8) 
+                    if (i >= (gridSize/2)-7 && i<=(gridSize/2)+7) 
                     {
                         if (j >= (gridSize/2) - (simkinInitialConfig[0].length/2) && j<(gridSize/2) + simkinInitialConfig[0].length/2) {
-                            currentGenCells[j][i] = simkinInitialConfig[jIterator][jIterator];
+                            currentGenCells[j][i] = simkinInitialConfig[iIterator][jIterator];
                             System.out.println(i);
                             jIterator++;
                         }  
-                        // else 
-                        // {
-                        //     currentGenCells[i][j] = 0; // white
-                            
-                        // }
                     }
-                    // else 
-                    // {
-                    //     currentGenCells[i][j] = 0; // white
-                    // }
                 }
                 jIterator = 0;
-                if (i >= (gridSize/2)-8 && i<=(gridSize/2)+8) {
+                if (i >= (gridSize/2)-7 && i<=(gridSize/2)+7) {
                     iIterator++;
                 }
 
