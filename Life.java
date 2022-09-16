@@ -26,9 +26,8 @@ public class Life {
     };
 
     private int simkinInitialConfig[][] = { // Initial configuration for Simkin glider gun pattern
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -40,7 +39,6 @@ public class Life {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
     };
 
     /* 
@@ -126,7 +124,7 @@ public class Life {
                 for (int j = 0; j < gridSize; j++)
                 {
                     // Aligning the initial configuration in the middle of the given grid
-                    if (i >= (gridSize/2)-7 && i<=(gridSize/2)+7) // Getting the vertical center of the grid
+                    if (i >= (gridSize/2)-6 && i<=(gridSize/2)+6) // Getting the vertical center of the grid
                     {
                         if (j >= (gridSize/2) - (simkinInitialConfig[0].length/2) && j<(gridSize/2) + simkinInitialConfig[0].length/2) // Getting the horizontal edges from the middle where I can copy the initial pattern configuration
                         {
@@ -136,7 +134,7 @@ public class Life {
                     }
                 }
                 jIterator = 0;
-                if (i >= (gridSize/2)-7 && i<=(gridSize/2)+7) {
+                if (i >= (gridSize/2)-6 && i<=(gridSize/2)+6) {
                     iIterator++;
                 }
 
@@ -216,7 +214,7 @@ public class Life {
         life.draw();
 
         for (int i = 0; i < numOfIterations; i++) {
-            try { Thread.sleep(100); } // Delay so we can see what's happening!
+            try { Thread.sleep(10); } // Delay so we can see what's happening!
             catch (Exception ex) { /* ignore */ }
             
             life.update(gridSize);

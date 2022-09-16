@@ -1,15 +1,7 @@
-<p align="center">
-  <a href="" rel="noopener">
- <img width=300px height=300px src="assets/images/game-of-life-random.gif" alt="Project logo"></a>
-</p>
+![Alt Text](assets/images/game-of-life-random.gif)
 
-<h3 align="center">Conway's game of life</h3>
-
----
-
-<p align="center"> This is a recreation of Conway's game of life
+This is a recreation of Conway's game of life
     <br> This project uses java to recreate Conway's game of life and can be used to simulate the game of life with 3 different initial configurations
-</p>
 
 ## 📝 Table of Contents
 
